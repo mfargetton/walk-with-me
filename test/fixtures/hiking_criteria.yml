@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level: MyString
+  duration: MyString
+  distancecontent: MyText
+  system_prompt: MyText
+
+two:
+  level: MyString
+  duration: MyString
+  distancecontent: MyText
+  system_prompt: MyText
