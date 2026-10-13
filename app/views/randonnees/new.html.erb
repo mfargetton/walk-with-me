@@ -1,0 +1,10 @@
+<div class="container">
+<h1>Ready to hike ?</h1>
+<%= simple_form_for(@randonnee) do |f| %>
+<%= f.input :level %>
+<%= f.input :duration %>
+<%= f.input :distance %>
+<%= f.input :content %>
+<%= f.submit placeholder="Come walk with me!" class="btn btn-primary" %>
+<% end %>
+</div>
