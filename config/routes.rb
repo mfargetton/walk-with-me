@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # installé automatiquement par la gem devise
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
