@@ -24,6 +24,24 @@
   </head>
 
   <body>
+<div class="container">
+<nav class="navbarelement">
+  <ul>
+    <li><%= link_to " Accueil", root_path  %></li>
+    <% if user_signed_in? %>
+    <li><%= link_to " Conversation", root_path  %></li>
+    <li><%= button_to " Déconnexion", destroy_user_session_path, method: :delete %></li>
+    <% else %>
+    <li><%= link_to "Connexion", new_user_session_path%>
+    <%end%>
+</ul>
+</nav>
+</div>
+
     <%= yield %>
+    <%# fonctionne avec devise pour le rendu des alertes. Code communiqué dans lors de l'installation de devise%>
+     <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
+
   </body>
 </html>
