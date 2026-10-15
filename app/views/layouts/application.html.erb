@@ -29,7 +29,7 @@
   <ul>
     <li><%= link_to " Accueil", root_path  %></li>
     <% if user_signed_in? %>
-    <li><%= link_to " Conversation", root_path  %></li>
+    <li><%= link_to " Conversation", new_randonnee_path  %></li>
     <li><%= button_to " Déconnexion", destroy_user_session_path, method: :delete %></li>
     <% else %>
     <li><%= link_to "Connexion", new_user_session_path%>

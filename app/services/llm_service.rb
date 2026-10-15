@@ -1,10 +1,10 @@
 class LlmService
-  def self.call(message_content)
+  def self.ask(randonnee, conversation)
     chat = RubyLLM.chat
 
     chat.with_instructions(HikingPrompt::SYSTEM_PROMPT)
 
-    response = chat.ask(message_content)
+    response = chat.ask(randonnee, conversation)
 
     HikingResponse.from_json(response.content)
 
