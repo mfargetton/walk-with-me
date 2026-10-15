@@ -1,4 +1,5 @@
 class RandonneesController < ApplicationController
+  before_action :authenticate_user!
   def new
     @randonnee = Randonnee.new
   end
@@ -6,7 +7,18 @@ class RandonneesController < ApplicationController
   def create
     @randonnee = Randonnee.new(randonnee_params)
     if @randonnee.save
-      redirect to conversation_path(@conversation)
+      # sauvegarde les critère de la randonnée de la conversation
+      @conversation = current_user.conversations.create(randonnee: @randonnee)
+      # appeler Llm avec les critères de la randonné
+      llm_response = LlmService.ask(@randonnee, @conversation)
+
+      # enregistrer la réponse du Llm
+      @conversation.message.create(
+        role: "assistant",
+        content: llm_response
+      )
+
+      redirect_to conversation_path(@conversation)
     else
       render :new, status: :unprocessable_entity
     end

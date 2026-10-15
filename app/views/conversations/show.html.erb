@@ -1,0 +1,8 @@
+<div class="container">
+  <h1>Conversation</h1>
+  <% @messages.each do |message| %>
+  <%= message.role == 'assistant' %>
+   <%= message.content %>
+  <% end %>
+
+</div>
