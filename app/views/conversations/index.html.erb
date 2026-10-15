@@ -1,0 +1,16 @@
+<div class="container my-4">
+  <h1>Mes randos</h1>
+
+  <% if @conversations.any? %>
+    <% @conversations.each do |conversation| %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= conversation.title %></h5>
+          <p class="card-text text-muted"><%= l conversation.created_at.to_date %></p>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>Aucune rando pour l'instant.</p>
+  <% end %>
+</div>
