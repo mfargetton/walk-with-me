@@ -1,6 +1,4 @@
 class RandonneesController < ApplicationController
-  # Méthode new
-  #
   def new
     @randonnee = Randonnee.new
   end
@@ -8,7 +6,7 @@ class RandonneesController < ApplicationController
   def create
     @randonnee = Randonnee.new(randonnee_params)
     if @randonnee.save
-      redirect_to conversation_path(@randonnee)
+      redirect to conversation_path(@conversation)
     else
       render :new, status: :unprocessable_entity
     end

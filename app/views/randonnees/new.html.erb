@@ -1,10 +1,15 @@
 <div class="container">
-<h1>Ready to hike ?</h1>
-<%= simple_form_for(@randonnee) do |f| %>
-<%= f.input :level %>
-<%= f.input :duration %>
-<%= f.input :distance %>
-<%= f.input :content %>
-<%= f.submit placeholder="Come walk with me!" class="btn btn-primary" %>
-<% end %>
+<h1>Envie d'une rando ?</h1>
+<div class="p-3 rounded-3 bg-light text-green" style="max-width: 70%;">
+    <%= simple_form_for(@randonnee) do |f| %>
+      <%= f.input :level,
+        as: :radio_buttons,
+        collection: Randonnee::LEVELS,
+        label: "T'as plutôt envie d'une randonnée de niveau ?"%>
+      <%= f.input :duration, label: "T'as envie de t'évader combien de jours ?"%>
+      <%= f.input :distance, label: "une idée de distance à parcourir ?" %>
+      <%= f.input :content, label: "Tu souhaites préciser le lieu, des choses à voir ? " %>
+      <%= f.submit "C'est parti!", class: "btn btn-success" %>
+    <% end %>
+  </div>
 </div>
