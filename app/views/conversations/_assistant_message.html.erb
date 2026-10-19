@@ -1,0 +1,80 @@
+<% response = hiking_response_for(message) %>
+<div class="message message-assistant">
+  <% if response %>
+    <% if response.intro.present? %>
+      <p class="lead"><%= response.intro %></p>
+    <% end %>
+
+    <% response.routes.each do |route| %>
+      <article class="card mb-3">
+        <div class="card-body">
+          <h2 class="h5 card-title mb-1"><%= route.title %></h2>
+          <% if route.subtitle.present? %>
+            <p class="text-muted"><%= route.subtitle %></p>
+          <% end %>
+
+          <ul class="list-unstyled mb-3">
+            <% if route.start_location.present? %>
+              <li>Départ : <%= route.start_location %></li>
+            <% end %>
+            <% if route.end_location.present? %>
+              <li>Arrivée : <%= route.end_location %></li>
+            <% end %>
+            <% if route.distance_km.present? %>
+              <li>Distance : <%= route.distance_km %> km</li>
+            <% end %>
+            <% if route.estimated_duration.present? %>
+              <li>Durée : <%= route.estimated_duration %></li>
+            <% end %>
+            <% if route.difficulty.present? %>
+              <li>Difficulté : <%= route.difficulty %></li>
+            <% end %>
+            <% if route.elevation_gain_m.present? %>
+              <li>Dénivelé : <%= route.elevation_gain_m %> m</li>
+            <% end %>
+          </ul>
+
+          <% if route.why_it_matches.present? %>
+            <p><strong>Pourquoi cette randonnée.</strong> <%= route.why_it_matches %></p>
+          <% end %>
+          <% if route.description.present? %>
+            <p><%= route.description %></p>
+          <% end %>
+
+          <% if route.highlights.present? %>
+            <h3 class="h6">Points d'intérêt</h3>
+            <ul>
+              <% route.highlights.each do |highlight| %>
+                <li>
+                  <% if highlight.is_a?(Hash) %>
+                    <strong><%= highlight["name"] %></strong>
+                    <% if highlight["description"].present? %>
+                      — <%= highlight["description"] %>
+                    <% end %>
+                  <% else %>
+                    <%= highlight %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if route.tips.present? %>
+            <h3 class="h6">Conseils</h3>
+            <ul>
+              <% route.tips.each do |tip| %>
+                <li><%= tip %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+
+    <% if response.follow_up_question.present? %>
+      <p class="fw-semibold"><%= response.follow_up_question %></p>
+    <% end %>
+  <% else %>
+    <%= simple_format(message.content) %>
+  <% end %>
+</div>

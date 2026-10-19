@@ -13,3 +13,15 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+module LlmServiceTestHelper
+  def with_llm_reply(reply)
+    original = LlmService.method(:ask)
+    LlmService.define_singleton_method(:ask) do |*|
+      reply.respond_to?(:call) ? reply.call : reply
+    end
+    yield
+  ensure
+    LlmService.define_singleton_method(:ask, original)
+  end
+end

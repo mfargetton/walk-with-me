@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # installé automatiquement par la gem devise
   devise_for :users
   root to: "pages#home"
-  resources :conversations, only: [:index , :show, :create ] do
+  resources :conversations, only: [ :index, :show ] do
     resources :messages, only: [ :create ]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

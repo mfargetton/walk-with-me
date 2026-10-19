@@ -1,8 +1,20 @@
-<div class="container">
-  <h1>Conversation</h1>
-  <% @messages.each do |message| %>
-  <%= message.role == 'assistant' %>
-   <%= message.content %>
-  <% end %>
+<div class="container my-4">
+  <h1><%= @conversation.title.presence || "Randonnée" %></h1>
 
+  <div class="conversation-thread">
+    <% @messages.each do |message| %>
+      <% if message.role == "assistant" %>
+        <%= render "conversations/assistant_message", message: message %>
+      <% else %>
+        <div class="message message-user">
+          <%= simple_format(message.content) %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= simple_form_for @message, url: conversation_messages_path(@conversation) do |f| %>
+    <%= f.input :content, as: :text, label: "Affiner la proposition", input_html: { rows: 3 }, required: true %>
+    <%= f.button :submit, "Envoyer", class: "btn btn-success" %>
+  <% end %>
 </div>

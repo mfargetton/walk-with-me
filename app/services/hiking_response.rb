@@ -44,7 +44,14 @@ class HikingResponse
   end
 
   def self.from_json(json)
-    data = JSON.parse(json)
+    data = json.is_a?(Hash) ? json : JSON.parse(normalize_json(json))
+    raise JSON::ParserError, "La réponse doit être un objet JSON" unless data.is_a?(Hash)
+
     new(data)
   end
+
+  def self.normalize_json(json)
+    json.to_s.strip.sub(/\A```(?:json)?\s*/i, "").sub(/\s*```\z/, "").strip
+  end
+  private_class_method :normalize_json
 end

@@ -120,4 +120,14 @@ class HikingPrompt
 
     Always respond in the same language as the user unless explicitly asked otherwise.
   PROMPT
+
+  def self.user_message(randonnee)
+    <<~MESSAGE
+      Voici les critères de la randonnée :
+      - niveau : #{randonnee.level}
+      - durée : #{randonnee.duration}
+      - distance : #{randonnee.distance}
+      - précisions : #{randonnee.content}
+    MESSAGE
+  end
 end

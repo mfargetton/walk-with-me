@@ -1,0 +1,4 @@
+one:
+  role: user
+  content: Voici les critères de la randonnée
+  conversation: one
