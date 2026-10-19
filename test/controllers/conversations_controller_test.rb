@@ -32,8 +32,18 @@ class ConversationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h2", text: "Lac Blanc"
-    assert_select "form"
+    assert_select "form#new_message"
     assert_select "body", text: /true|false/, count: 0
+  end
+
+  test "affiche l'attente tant que la réponse n'est pas arrivée" do
+    sign_in users(:one)
+
+    get conversation_path(conversations(:one))
+
+    assert_response :success
+    assert_select "#reply-pending"
+    assert_select "form#new_message", count: 0
   end
 
   test "un autre utilisateur ne peut pas ouvrir la conversation" do

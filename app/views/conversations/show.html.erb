@@ -13,8 +13,15 @@
     <% end %>
   </div>
 
-  <%= simple_form_for @message, url: conversation_messages_path(@conversation) do |f| %>
-    <%= f.input :content, as: :text, label: "Affiner la proposition", input_html: { rows: 3 }, required: true %>
-    <%= f.button :submit, "Envoyer", class: "btn btn-success" %>
+  <% if reply_pending?(@messages) %>
+    <% content_for :head do %>
+      <meta http-equiv="refresh" content="3">
+    <% end %>
+    <p id="reply-pending">La proposition est en cours de préparation…</p>
+  <% else %>
+    <%= simple_form_for @message, url: conversation_messages_path(@conversation) do |f| %>
+      <%= f.input :content, as: :text, label: "Affiner la proposition", input_html: { rows: 3 }, required: true %>
+      <%= f.button :submit, "Envoyer", class: "btn btn-success" %>
+    <% end %>
   <% end %>
 </div>
