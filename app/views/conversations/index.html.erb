@@ -3,14 +3,17 @@
 
   <% if @conversations.any? %>
     <% @conversations.each do |conversation| %>
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title"><%= conversation.title %></h5>
-          <p class="card-text text-muted"><%= l conversation.created_at.to_date %></p>
+      <%= link_to conversation_path(conversation), class: "conversation-card" do %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 card-title"><%= conversation.title.presence || "Randonnée" %></h2>
+            <p class="card-text text-muted mb-0"><%= l conversation.created_at.to_date %></p>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   <% else %>
     <p>Aucune rando pour l'instant.</p>
+    <%= link_to "Créer une randonnée", new_randonnee_path, class: "btn btn-success" %>
   <% end %>
 </div>

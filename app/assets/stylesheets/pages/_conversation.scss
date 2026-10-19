@@ -1,0 +1,28 @@
+.conversation-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.message-user {
+  align-self: flex-end;
+  max-width: 70%;
+  background: #e8f5e9;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.message-user p:last-child {
+  margin-bottom: 0;
+}
+
+.conversation-card {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.conversation-card:hover .card {
+  background-color: #f3faf4;
+}
