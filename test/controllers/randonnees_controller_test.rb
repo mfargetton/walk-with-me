@@ -28,16 +28,18 @@ class RandonneesControllerTest < ActionDispatch::IntegrationTest
     assert_equal reply, conversation.messages.last.content
   end
 
-  test "n'enregistre rien si la génération échoue" do
+  test "redirige tout de suite et signale l'échec de génération dans la conversation" do
     with_llm_reply(-> { raise RubyLLM::Error, "boom" }) do
-      assert_no_difference [ "Randonnee.count", "Conversation.count", "Message.count" ] do
+      assert_difference -> { Randonnee.count } => 1, -> { Conversation.count } => 1, -> { Message.count } => 2 do
         post randonnees_path, params: {
           randonnee: { level: "débutant", duration: "2 jours", distance: "10 km", content: "Alpes" }
         }
       end
     end
 
-    assert_response :unprocessable_entity
+    conversation = Conversation.order(:created_at).last
+    assert_redirected_to conversation_path(conversation)
+    assert_equal HikingReply::ERROR_MESSAGE, conversation.messages.last.content
   end
 
   test "réaffiche le formulaire si les critères sont invalides" do

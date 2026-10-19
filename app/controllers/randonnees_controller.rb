@@ -12,22 +12,18 @@ class RandonneesController < ApplicationController
       return
     end
 
-    @conversation = create_conversation_with_reply(@randonnee)
+    @conversation = create_conversation(@randonnee)
+    HikingReply.generate_later(@conversation)
     redirect_to conversation_path(@conversation)
   rescue ActiveRecord::RecordInvalid
     @randonnee = Randonnee.new(randonnee_params)
     @randonnee.valid?
     render :new, status: :unprocessable_entity
-  rescue RubyLLM::Error, JSON::ParserError => e
-    Rails.logger.error("RandonneesController: #{e.class} - #{e.message}")
-    @randonnee = Randonnee.new(randonnee_params)
-    flash.now[:alert] = "La génération de la randonnée a échoué. Réessayez dans un instant."
-    render :new, status: :unprocessable_entity
   end
 
   private
 
-  def create_conversation_with_reply(randonnee)
+  def create_conversation(randonnee)
     ActiveRecord::Base.transaction do
       randonnee.save!
       conversation = current_user.conversations.create!(
@@ -37,10 +33,6 @@ class RandonneesController < ApplicationController
       conversation.messages.create!(
         role: "user",
         content: HikingPrompt.user_message(randonnee)
-      )
-      conversation.messages.create!(
-        role: "assistant",
-        content: LlmService.ask(conversation)
       )
       conversation
     end
