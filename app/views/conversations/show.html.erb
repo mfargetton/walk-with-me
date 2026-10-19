@@ -18,6 +18,9 @@
       <meta http-equiv="refresh" content="3">
     <% end %>
     <p id="reply-pending">La proposition est en cours de préparation…</p>
+    <div class="spinner-border text-secondary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   <% else %>
     <%= simple_form_for @message, url: conversation_messages_path(@conversation) do |f| %>
       <%= f.input :content, as: :text, label: "Affiner la proposition", input_html: { rows: 3 }, required: true %>
